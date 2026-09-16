@@ -79,7 +79,7 @@ export class Login {
       required(path.email, { message: 'Enter your email' });
       email(path.email, { message: 'Enter a valid email address' });
       required(path.password, { message: 'Enter your password' });
-      minLength(path.password, 6, { message: 'Password must be at least 6 characters' });
+      minLength(path.password, 8, { message: 'Password must be at least 8 characters' });
     },
     {
       submission: {

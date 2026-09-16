@@ -68,9 +68,8 @@ jobs:
         with:
           version: ${{ env.SUPABASE_CLI_VERSION }}
 
-      - run: supabase link --project-ref "$SUPABASE_PROJECT_ID"
-
-      - run: supabase db push
+      # No `supabase link`: it reads the secret API keys, which would need a riskier token permission.
+      - run: supabase db push --project-ref "$SUPABASE_PROJECT_ID"
 
       # Logs what will change, then applies config.toml with the [remotes.production] overrides.
       - name: Show config changes

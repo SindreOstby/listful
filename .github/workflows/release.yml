@@ -54,7 +54,7 @@ jobs:
           path: app/dist/listful/browser
 
   deploy-database:
-    name: Deploy Supabase migrations and config
+    name: Deploy Supabase migrations
     needs: build
     runs-on: ubuntu-latest
     timeout-minutes: 15
@@ -70,13 +70,6 @@ jobs:
 
       # No `supabase link`: it reads the secret API keys, which would need a riskier token permission.
       - run: supabase db push --project-ref "$SUPABASE_PROJECT_ID"
-
-      # Logs what will change, then applies config.toml with the [remotes.production] overrides.
-      - name: Show config changes
-        run: supabase config diff --project-ref "$SUPABASE_PROJECT_ID"
-
-      - name: Push config
-        run: supabase config push --project-ref "$SUPABASE_PROJECT_ID" --yes
 
   deploy-app:
     name: Deploy app to GitHub Pages

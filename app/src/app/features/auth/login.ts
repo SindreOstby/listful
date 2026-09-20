@@ -1,7 +1,10 @@
 import { Component, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { email, form, FormField, FormRoot, minLength, required, submit } from '@angular/forms/signals';
+import { email, form, FormField, FormRoot, required, submit } from '@angular/forms/signals';
 import { Auth } from '../../core/auth';
+
+/** Matches `minimum_password_length` in supabase/config.toml. Enforced on sign-up only. */
+const MINIMUM_NEW_PASSWORD_LENGTH = 8;
 
 @Component({
   selector: 'app-login',
@@ -78,8 +81,9 @@ export class Login {
     (path) => {
       required(path.email, { message: 'Enter your email' });
       email(path.email, { message: 'Enter a valid email address' });
+      // No length rule here: it would lock out accounts created before the minimum was raised.
+      // New passwords are checked in createAccount(), and by Supabase itself.
       required(path.password, { message: 'Enter your password' });
-      minLength(path.password, 8, { message: 'Password must be at least 8 characters' });
     },
     {
       submission: {
@@ -99,6 +103,11 @@ export class Login {
   }
 
   protected createAccount(): void {
+    const { password } = this.credentials();
+    if (password.length > 0 && password.length < MINIMUM_NEW_PASSWORD_LENGTH) {
+      this.message.set(`Password must be at least ${MINIMUM_NEW_PASSWORD_LENGTH} characters`);
+      return;
+    }
     void submit(this.loginForm, async () => {
       await this.run(async ({ email, password }) => {
         const signedIn = await this.auth.signUp(email, password);

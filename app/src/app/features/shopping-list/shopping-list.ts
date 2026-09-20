@@ -12,59 +12,59 @@ const EMPTY_ITEM = { name: '', quantity: 1, unit: '' };
   template: `
     <main class="mx-auto max-w-xl px-4 py-8">
       <header class="flex items-center justify-between gap-4">
-        <h1 class="text-2xl font-bold text-gray-900">{{ list()?.name ?? 'Shopping list' }}</h1>
+        <h1 class="text-2xl font-bold text-ink">{{ list()?.name ?? 'Shopping list' }}</h1>
         <button
           type="button"
           (click)="signOut()"
-          class="rounded-md px-3 py-1.5 text-sm font-medium text-blue-800 hover:bg-blue-50"
+          class="rounded-lg px-3 py-2 text-sm font-medium text-ink hover:bg-accent-soft"
         >
           Sign out
         </button>
       </header>
 
       @if (error(); as message) {
-        <p role="alert" class="mt-4 rounded-md bg-red-50 px-3 py-2 text-sm text-red-800">{{ message }}</p>
+        <p role="alert" class="mt-4 rounded-lg bg-danger-soft px-3 py-2 text-sm text-danger">{{ message }}</p>
       }
 
       <form [formRoot]="itemForm" class="mt-6 flex flex-wrap items-end gap-3" aria-label="Add item">
         <div class="min-w-40 flex-1">
-          <label for="item-name" class="block text-sm font-medium text-gray-900">Item</label>
+          <label for="item-name" class="block text-sm font-medium text-ink">Item</label>
           <input
             id="item-name"
             placeholder="Milk"
             [formField]="itemForm.name"
-            class="mt-1 w-full rounded-md border border-gray-400 px-3 py-2 focus:outline-2 focus:outline-blue-700"
+            class="mt-1 w-full rounded-lg border border-line bg-surface px-3 py-2.5 text-ink placeholder:text-muted"
           />
         </div>
         <div class="w-24">
-          <label for="item-quantity" class="block text-sm font-medium text-gray-900">Quantity</label>
+          <label for="item-quantity" class="block text-sm font-medium text-ink">Quantity</label>
           <input
             id="item-quantity"
             type="number"
             step="any"
             [formField]="itemForm.quantity"
-            class="mt-1 w-full rounded-md border border-gray-400 px-3 py-2 focus:outline-2 focus:outline-blue-700"
+            class="mt-1 w-full rounded-lg border border-line bg-surface px-3 py-2.5 text-ink placeholder:text-muted"
           />
         </div>
         <div class="w-24">
-          <label for="item-unit" class="block text-sm font-medium text-gray-900">Unit</label>
+          <label for="item-unit" class="block text-sm font-medium text-ink">Unit</label>
           <input
             id="item-unit"
             placeholder="L"
             [formField]="itemForm.unit"
-            class="mt-1 w-full rounded-md border border-gray-400 px-3 py-2 focus:outline-2 focus:outline-blue-700"
+            class="mt-1 w-full rounded-lg border border-line bg-surface px-3 py-2.5 text-ink placeholder:text-muted"
           />
         </div>
         <button
           type="submit"
           [disabled]="!list() || itemForm().submitting()"
-          class="rounded-md bg-blue-700 px-4 py-2 font-medium text-white hover:bg-blue-800 disabled:opacity-60"
+          class="rounded-lg bg-accent px-4 py-2.5 font-medium text-white hover:bg-accent-hover disabled:opacity-60"
         >
           Add
         </button>
       </form>
       @if (itemForm().touched() && itemForm().invalid()) {
-        <ul class="mt-2 text-sm text-red-700">
+        <ul class="mt-2 text-sm text-danger">
           @for (fieldError of itemForm().errorSummary(); track $index) {
             <li>{{ fieldError.message }}</li>
           }
@@ -74,26 +74,26 @@ const EMPTY_ITEM = { name: '', quantity: 1, unit: '' };
       <section class="mt-8" aria-labelledby="items-heading" aria-live="polite">
         <h2 id="items-heading" class="sr-only">Items</h2>
         @if (loading()) {
-          <p class="text-gray-700">Loading your list…</p>
+          <p class="text-muted">Loading your list…</p>
         } @else {
-          <ul class="divide-y divide-gray-200 rounded-md border border-gray-200 bg-white">
+          <ul class="divide-y divide-line rounded-lg border border-line bg-surface">
             @for (item of items(); track item.id) {
               <li class="flex items-center justify-between gap-4 px-4 py-3">
-                <span class="text-gray-900">
+                <span class="text-ink">
                   {{ item.name }}
-                  <span class="text-gray-700">· {{ item.quantity }}{{ item.unit ? ' ' + item.unit : '' }}</span>
+                  <span class="text-muted">· {{ item.quantity }}{{ item.unit ? ' ' + item.unit : '' }}</span>
                 </span>
                 <button
                   type="button"
                   (click)="deleteItem(item)"
                   [attr.aria-label]="'Delete ' + item.name"
-                  class="rounded-md px-3 py-1.5 text-sm font-medium text-red-700 hover:bg-red-50"
+                  class="rounded-lg px-3 py-2 text-sm font-medium text-danger hover:bg-danger-soft"
                 >
                   Delete
                 </button>
               </li>
             } @empty {
-              <li class="px-4 py-6 text-center text-gray-700">Your list is empty. Add something you need.</li>
+              <li class="px-4 py-6 text-center text-muted">Your list is empty. Add something you need.</li>
             }
           </ul>
         }

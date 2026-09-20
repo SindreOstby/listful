@@ -11,49 +11,49 @@ const MINIMUM_NEW_PASSWORD_LENGTH = 8;
   imports: [FormField, FormRoot],
   template: `
     <main class="mx-auto max-w-sm px-4 py-12">
-      <h1 class="text-3xl font-bold text-gray-900">Listful</h1>
-      <p class="mt-1 text-gray-700">Buy what you need. Waste less.</p>
+      <h1 class="text-2xl font-bold text-ink">Listful</h1>
+      <p class="mt-1 text-muted">Buy what you need. Waste less.</p>
 
       <form [formRoot]="loginForm" class="mt-8 space-y-4" aria-label="Sign in">
         <div>
-          <label for="email" class="block text-sm font-medium text-gray-900">Email</label>
+          <label for="email" class="block text-sm font-medium text-ink">Email</label>
           <input
             id="email"
             type="email"
             autocomplete="email"
             [formField]="loginForm.email"
             [attr.aria-describedby]="showErrors(loginForm.email().touched(), loginForm.email().invalid()) ? 'email-error' : null"
-            class="mt-1 w-full rounded-md border border-gray-400 px-3 py-2 focus:outline-2 focus:outline-blue-700"
+            class="mt-1 w-full rounded-lg border border-line bg-surface px-3 py-2.5 text-ink placeholder:text-muted"
           />
           @if (showErrors(loginForm.email().touched(), loginForm.email().invalid())) {
-            <p id="email-error" class="mt-1 text-sm text-red-700">{{ loginForm.email().errors()[0].message }}</p>
+            <p id="email-error" class="mt-1 text-sm text-danger">{{ loginForm.email().errors()[0].message }}</p>
           }
         </div>
 
         <div>
-          <label for="password" class="block text-sm font-medium text-gray-900">Password</label>
+          <label for="password" class="block text-sm font-medium text-ink">Password</label>
           <input
             id="password"
             type="password"
             autocomplete="current-password"
             [formField]="loginForm.password"
             [attr.aria-describedby]="showErrors(loginForm.password().touched(), loginForm.password().invalid()) ? 'password-error' : null"
-            class="mt-1 w-full rounded-md border border-gray-400 px-3 py-2 focus:outline-2 focus:outline-blue-700"
+            class="mt-1 w-full rounded-lg border border-line bg-surface px-3 py-2.5 text-ink placeholder:text-muted"
           />
           @if (showErrors(loginForm.password().touched(), loginForm.password().invalid())) {
-            <p id="password-error" class="mt-1 text-sm text-red-700">{{ loginForm.password().errors()[0].message }}</p>
+            <p id="password-error" class="mt-1 text-sm text-danger">{{ loginForm.password().errors()[0].message }}</p>
           }
         </div>
 
         @if (message(); as msg) {
-          <p role="alert" class="rounded-md bg-red-50 px-3 py-2 text-sm text-red-800">{{ msg }}</p>
+          <p role="alert" class="rounded-lg bg-danger-soft px-3 py-2 text-sm text-danger">{{ msg }}</p>
         }
 
         <div class="flex gap-3">
           <button
             type="submit"
             [disabled]="loginForm().submitting()"
-            class="flex-1 rounded-md bg-blue-700 px-4 py-2 font-medium text-white hover:bg-blue-800 disabled:opacity-60"
+            class="flex-1 rounded-lg bg-accent px-4 py-2.5 font-medium text-white hover:bg-accent-hover disabled:opacity-60"
           >
             Sign in
           </button>
@@ -61,7 +61,7 @@ const MINIMUM_NEW_PASSWORD_LENGTH = 8;
             type="button"
             (click)="createAccount()"
             [disabled]="loginForm().submitting()"
-            class="flex-1 rounded-md border border-blue-700 px-4 py-2 font-medium text-blue-800 hover:bg-blue-50 disabled:opacity-60"
+            class="flex-1 rounded-lg border border-line bg-surface px-4 py-2.5 font-medium text-ink hover:bg-accent-soft disabled:opacity-60"
           >
             Create account
           </button>

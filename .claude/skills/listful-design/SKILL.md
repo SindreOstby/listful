@@ -72,6 +72,19 @@ Copy these rather than inventing variants.
 
 <!-- list card -->
 <ul class="divide-y divide-line rounded-lg border border-line bg-surface">
+
+<!-- checkbox row: the label is the 44px tap target, not the 20px box.
+     Native control + accent-accent, so the tick takes its colour from the theme. -->
+<li class="flex items-center justify-between gap-2 pr-2">
+  <label class="flex min-h-11 flex-1 items-center gap-3 py-3 pl-4">
+    <input type="checkbox" class="size-5 shrink-0 accent-accent" />
+    <span class="text-ink">Item</span>
+  </label>
+  <button class="rounded-lg px-3 py-2 text-sm font-medium text-danger hover:bg-danger-soft">Delete</button>
+</li>
+
+<!-- group heading above a second list card -->
+<h3 class="text-lg font-semibold text-ink">Got it (3)</h3>
 ```
 
 ## Common mistakes
@@ -82,6 +95,11 @@ Copy these rather than inventing variants.
 - Making a second button `bg-accent` because it feels important. Rule 2 — demote it.
 - Adding `shadow-sm` to lift a card. Rule 3 — the `line` border does that job.
 - Introducing a hover color inline (`hover:bg-orange-50`). Use `accent-soft` / `danger-soft`.
+- Hand-rolling a checkbox with `appearance-none` and a hex-coloured tick SVG. Use the native control
+  plus `accent-accent`: a data-URI glyph can't take its colour from a token, and rule 6's global
+  focus style already covers the native one.
+- Reading rule 6's 44px as the size of the painted control. It's the hit area — a 20px checkbox
+  inside a `min-h-11` label is correct.
 
 ## Adding dark mode later
 

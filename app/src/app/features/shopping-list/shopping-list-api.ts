@@ -56,4 +56,31 @@ export class ShoppingListApi {
     const { error } = await this.supabase.from('shopping_list_items').delete().eq('id', id);
     if (error) throw error;
   }
+
+  /**
+   * Takes the new value rather than toggling, so two taps landing out of order can't lose an update.
+   *
+   * `.select().single()` is deliberate: an update matching no row — deleted on another device, or
+   * blocked by RLS — otherwise succeeds with no error, and the optimistic UI would keep a state the
+   * server never accepted. Asking for the row back turns that silent no-op into an error.
+   */
+  async setItemChecked(id: string, isChecked: boolean): Promise<void> {
+    const { error } = await this.supabase
+      .from('shopping_list_items')
+      .update({ is_checked: isChecked })
+      .eq('id', id)
+      .select()
+      .single();
+    if (error) throw error;
+  }
+
+  /** Filters server-side: a `.in('id', ids)` list of UUIDs would be kilobytes of query string. */
+  async deleteCheckedItems(listId: string): Promise<void> {
+    const { error } = await this.supabase
+      .from('shopping_list_items')
+      .delete()
+      .eq('list_id', listId)
+      .eq('is_checked', true);
+    if (error) throw error;
+  }
 }

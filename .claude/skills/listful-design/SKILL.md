@@ -16,15 +16,18 @@ All ten colors are Tailwind v4 theme tokens in `app/src/styles.css`, so each is 
 | `surface` | `#FFFDFB` | cards, lists, inputs |
 | `line` | `#E7DED3` | borders, dividers |
 | `ink` | `#292524` | body text, headings |
-| `muted` | `#78716C` | secondary text, placeholders |
+| `muted` | `#736C67` | secondary text, placeholders |
 | `accent` | `#C2410C` | the one primary action |
 | `accent-hover` | `#9A3412` | its hover |
 | `accent-soft` | `#FDEEE4` | ghost/text button hover |
 | `danger` | `#BE123C` | destructive actions, errors |
 | `danger-soft` | `#FFF1F2` | alert backgrounds |
 
-Contrast is AA: white on `accent` 4.9:1, `muted` on `ground` 4.7:1, `danger` on `ground` 6.5:1.
-Changing any of these five values means re-checking the ratio.
+Contrast is AA: white on `accent` 4.9:1, `muted` on `ground` 4.81:1 (on `surface` 5.08:1), `danger`
+on `ground` 6.5:1. Check the ratio against **`ground`**, not `surface` — `ground` is the darker of
+the two, so it is the one that fails first. `muted` was originally `#78716C`, which measures 4.73:1
+on `surface` but only **4.48:1** on `ground`, i.e. below AA; that is the mistake this note exists to
+prevent. Changing any of these values means re-computing the ratio.
 
 ## The seven rules
 

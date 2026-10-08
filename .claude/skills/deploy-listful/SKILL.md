@@ -22,11 +22,9 @@ gh run watch <run-id>            # gh run list --workflow release.yml --limit 1
 `.github/workflows/release.yml` runs three jobs in order, each stopping the next on failure:
 
 1. **Test and build app** — `npm ci`, `npm test -- --watch=false`, then
-   `ng build --output-mode static --base-href "/listful/"`. Angular is configured for SSR, but
-   GitHub Pages only serves static files, so the build overrides `outputMode`. Every route is
-   `RenderMode.Client`, so nothing is lost. The step renames `index.csr.html` to `index.html` and
-   copies it to `404.html`, which is what makes deep links such as `/listful/login` load the app
-   (GitHub still returns a 404 status for them — expected).
+   `ng build --base-href "/listful/"`. The app is a plain client-rendered SPA (no SSR). The step
+   copies `index.html` to `404.html`, which is what makes deep links such as `/listful/login` load
+   the app (GitHub still returns a 404 status for them — expected).
 2. **Deploy Supabase migrations** — `supabase db push --project-ref "$SUPABASE_PROJECT_ID"`.
 3. **Deploy app to GitHub Pages** — `actions/deploy-pages`.
 

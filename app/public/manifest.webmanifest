@@ -1,9 +1,11 @@
 {
-  "name": "listful",
-  "short_name": "listful",
+  "name": "Listful",
+  "short_name": "Listful",
   "display": "standalone",
-  "scope": "./",
-  "start_url": "./",
+  "scope": ".",
+  "start_url": ".",
+  "theme_color": "#fdf6ee",
+  "background_color": "#fdf6ee",
   "icons": [
     {
       "src": "icons/icon-72x72.png",
